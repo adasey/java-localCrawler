@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### Code Files ###
-/bunch/**
+/src/main/bunch/**
