@@ -1,5 +1,7 @@
 package crawler.creative.local.jlcCrawler;
 
+import crawler.creative.local.jlcCrawler.service.LocalFileSearcher;
+
 public class CrawlerApplication {
 
     public static void main(String[] args) {

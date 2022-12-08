@@ -1,5 +1,6 @@
-package crawler.creative.local.jlcCrawler;
+package crawler.creative.local.jlcCrawler.service;
 
+import crawler.creative.local.jlcCrawler.domain.LocalFile;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,11 +32,9 @@ public class LocalFileSearcher {
         for (File t : test) {
             allFilesSearch(value, t);
         }
-        System.out.println("test = " + test);
-        System.out.println("value = " + value);
     }
 
-    private List<File> allFilesSearch(List<File> eachFiles, File dir) {
+    public List<File> allFilesSearch(List<File> eachFiles, File dir) {
         File[] files = dir.listFiles();
 
         if (files != null) {
@@ -53,7 +52,7 @@ public class LocalFileSearcher {
         return eachFiles;
     }
 
-    private void allFolderSearch(List<File> eachFolderFiles, File dir) {
+    public void allFolderSearch(List<File> eachFolderFiles, File dir) {
         FilenameFilter noCodeFileFilter = (path, name) -> !name.contains(".java");
 
         File[] files = dir.listFiles(noCodeFileFilter);
