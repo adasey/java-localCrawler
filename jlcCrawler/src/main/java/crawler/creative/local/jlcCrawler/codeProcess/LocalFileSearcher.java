@@ -1,4 +1,4 @@
-package crawler.creative.local.jlcCrawler.service;
+package crawler.creative.local.jlcCrawler.codeProcess;
 
 import crawler.creative.local.jlcCrawler.domain.LocalFile;
 import lombok.Getter;
@@ -19,11 +19,6 @@ public class LocalFileSearcher {
     public LocalFileSearcher(String dirPath) {
         File dir = new File(dirPath);
         onlyFolderSearch(dir);
-
-//        for (File f : localFile.getJarTitleList()) {
-//            List<File> files = allFilesAndFolderSearch(f);
-//            localFile.setAllFolderList(files);
-//        }
 
         File f = localFile.getJarTitleList().get(0);
         List<File> test = new ArrayList<>();

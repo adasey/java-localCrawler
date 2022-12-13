@@ -3,9 +3,7 @@ package crawler.creative.local.jlcCrawler.domain;
 import lombok.*;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @Setter

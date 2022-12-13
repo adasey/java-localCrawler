@@ -9,14 +9,16 @@
         <tbody>
             <tr th:each="val, valStat : ${files}">
                 <td>
-                    <a th:href="@{'/' +${valStat.index}}">
+                    <a th:href="@{'/files/' +${valStat.index}}">
                         [[ ${val.fileDir} ]]
                     </a>
                 </td>
             </tr>
             <tr th:each="val, valStat : ${javaFiles}">
                 <td>
-                    [[ ${val.fileDir} ]]
+                    <a th:href="@{'/files/' +${fileIndex} + '/details/' + ${valStat.index}}">
+                        [[ ${val.fileDir} ]]
+                    </a>
                 </td>
             </tr>
         </tbody>
