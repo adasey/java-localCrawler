@@ -4,6 +4,7 @@ import crawler.creative.local.jlcCrawler.CodeSyntax;
 import crawler.creative.local.jlcCrawler.codeProcess.JFileAnalyzer;
 import crawler.creative.local.jlcCrawler.domain.BodyContent;
 import crawler.creative.local.jlcCrawler.codeProcess.LocalFileSearcher;
+import crawler.creative.local.jlcCrawler.domain.CodeValue;
 import crawler.creative.local.jlcCrawler.domain.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -51,22 +52,16 @@ public class LocalSearchController {
     }
 
     @GetMapping("/files/{id}/details/{val}")
-    private String checkDetailOfFiles(@PathVariable int id, @PathVariable int val, @RequestParam(required = false) String syntax, Model model) {
+    private String checkDetailOfFiles(@PathVariable int id, @PathVariable int val, Model model) {
         List<File> files = localFileSearcher.getLocalFile().getAllFileMap().get(id);
         File f = files.get(val);
         JFileAnalyzer jFileAnalyzer = new JFileAnalyzer();
         BodyContent bodyContent = new BodyContent(jFileAnalyzer.fileScan(f));
-
-        List<String> strings = new ArrayList<>();
-        if (syntax != null) {
-            log.info("check what happen : {}", syntax);
-            if (syntax.equals(CodeSyntax.CLASS.getName())) {
-                strings = jFileAnalyzer.codeObjectAnalyzer(bodyContent.getContent());
-            }
-        }
+        log.info("after file scan ... : {}", bodyContent.getContent());
+        CodeValue strings = jFileAnalyzer.codeSyntaxAnalyzer(bodyContent.getContent());
 
         model.addAttribute("fileIndex", id);
-        model.addAttribute("javaClass", strings);
+        model.addAttribute("javaSyntax", strings);
         model.addAttribute("javaDetails", bodyContent);
         return "fileDetail";
     }

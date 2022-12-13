@@ -7,9 +7,7 @@ import java.util.List;
 
 @Builder
 @Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CodeValue {
     private final List<String> className = new ArrayList<>();
     private final List<String> interfaceName = new ArrayList<>();

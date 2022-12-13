@@ -6,6 +6,13 @@
 </head>
 <body>
     <table>
+        <thead>
+        <tr>
+            <th>
+                all
+            </th>
+        </tr>
+        </thead>
         <tbody>
             <tr th:each="val : ${javaDetails.content}">
                 <td>
@@ -16,8 +23,66 @@
     </table>
 
     <table>
+        <thead>
+        <tr>
+            <th>
+                class
+            </th>
+        </tr>
+        </thead>
         <tbody>
-        <tr th:each="val : ${javaClass}">
+        <tr th:each="val : ${javaSyntax.className}">
+            <td>
+                [[ ${val} ]]
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+        <tr>
+            <th>
+                interface
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="val : ${javaSyntax.interfaceName}">
+            <td>
+                [[ ${val} ]]
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+        <tr>
+            <th>
+                method
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="val : ${javaSyntax.methodName}">
+            <td>
+                [[ ${val} ]]
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+        <tr>
+            <th>
+                enum
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="val : ${javaSyntax.enumName}">
             <td>
                 [[ ${val} ]]
             </td>
