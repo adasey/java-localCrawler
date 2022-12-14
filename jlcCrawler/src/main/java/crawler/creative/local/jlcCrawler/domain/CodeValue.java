@@ -9,10 +9,10 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class CodeValue {
-    private final List<String> className = new ArrayList<>();
-    private final List<String> interfaceName = new ArrayList<>();
-    private final List<MemberMethod> method = new ArrayList<>();
-    private final List<String> enumName = new ArrayList<>();
+    private final List<AccessClass> classes = new ArrayList<>();
+    private final List<AccessInterface> interfaces = new ArrayList<>();
+    private final List<MemberMethod> methods = new ArrayList<>();
+    private final List<AccessEnum> enums = new ArrayList<>();
     private final List<String> varName = new ArrayList<>();
     private final List<String> annoName = new ArrayList<>();
 }

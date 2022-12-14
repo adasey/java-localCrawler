@@ -22,35 +22,55 @@
         </tbody>
     </table>
 
+    class
     <table>
         <thead>
         <tr>
+            <th>
+                access
+            </th>
+            <th>
+                abstract
+            </th>
             <th>
                 class
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="val : ${javaSyntax.className}">
+        <tr th:each="val : ${javaSyntax.classes}">
             <td>
-                [[ ${val} ]]
+                [[ ${val.accessModifier} ]]
+            </td>
+            <td>
+                [[ ${val.checkAbstract} ]]
+            </td>
+            <td>
+                [[ ${val.className} ]]
             </td>
         </tr>
         </tbody>
     </table>
 
+    interface
     <table>
         <thead>
         <tr>
+            <th>
+                access
+            </th>
             <th>
                 interface
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="val : ${javaSyntax.interfaceName}">
+        <tr th:each="val : ${javaSyntax.interfaces}">
             <td>
-                [[ ${val} ]]
+                [[ ${val.accessModifier} ]]
+            </td>
+            <td>
+                [[ ${val.interfaceName} ]]
             </td>
         </tr>
         </tbody>
@@ -72,7 +92,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="val : ${javaSyntax.method}">
+        <tr th:each="val : ${javaSyntax.methods}">
             <td>
                 [[ ${val.accessModifier} ]]
             </td>
@@ -86,18 +106,25 @@
         </tbody>
     </table>
 
+    enum
     <table>
         <thead>
         <tr>
+            <th>
+                access
+            </th>
             <th>
                 enum
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="val : ${javaSyntax.enumName}">
+        <tr th:each="val : ${javaSyntax.enums}">
             <td>
-                [[ ${val} ]]
+                [[ ${val.accessModifier} ]]
+            </td>
+            <td>
+                [[ ${val.enumName} ]]
             </td>
         </tr>
         </tbody>

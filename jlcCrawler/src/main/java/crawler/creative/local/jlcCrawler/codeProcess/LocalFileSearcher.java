@@ -19,14 +19,14 @@ public class LocalFileSearcher {
     public LocalFileSearcher(String dirPath) {
         File dir = new File(dirPath);
         onlyFolderSearch(dir);
-
-        File f = localFile.getJarTitleList().get(0);
-        List<File> test = new ArrayList<>();
-        allFolderSearch(test, f);
-        List<File> value = new ArrayList<>();
-        for (File t : test) {
-            allFilesSearch(value, t);
-        }
+//
+//        File f = localFile.getJarTitleList().get(0);
+//        List<File> test = new ArrayList<>();
+//        allFolderSearch(test, f);
+//        List<File> value = new ArrayList<>();
+//        for (File t : test) {
+//            allFilesSearch(value, t);
+//        }
     }
 
     public List<File> allFilesSearch(List<File> eachFiles, File dir) {

@@ -1,9 +1,7 @@
 package crawler.creative.local.jlcCrawler.codeProcess;
 
 import crawler.creative.local.jlcCrawler.CodeSyntax;
-import crawler.creative.local.jlcCrawler.domain.CodeValue;
-import crawler.creative.local.jlcCrawler.domain.ExceptSyntax;
-import crawler.creative.local.jlcCrawler.domain.MemberMethod;
+import crawler.creative.local.jlcCrawler.domain.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -49,6 +47,9 @@ public class JFileAnalyzer {
 
     public CodeValue codeSyntaxAnalyzer(List<String> code) {
         CodeValue result = new CodeValue();
+        List<String> tempClass = new ArrayList<>();
+        List<String> tempInterface = new ArrayList<>();
+        List<String> tempEnum = new ArrayList<>();
         List<String> tempMethod = new ArrayList<>();
 
         for (String o : code) {
@@ -57,19 +58,83 @@ public class JFileAnalyzer {
 
             if (o.contains(CodeSyntax.CLASS.get())) {
                 int index = collect.indexOf(CodeSyntax.CLASS.get());
-                result.getClassName().add(collect.get(index + 1));
+
+                try {
+                    if (collect.get(index).equals(CodeSyntax.CLASS.get())) {
+                        if (!tempClass.contains(collect.get(index + 1))) {
+                            tempClass.add(collect.get(index + 1));
+
+                            int check = index - 1;
+                            String abstractCheck = "";
+                            AccessClass accessClass = null;
+                            check = accessCheck(collect, check);
+
+                            if (collect.get(check).contains("abstract")) {
+                                abstractCheck = "abstract";
+                                check--;
+                            }
+
+                            if (check < 0) {
+                                check = 0;
+                            }
+
+                            accessClass = new AccessClass("package private", abstractCheck, collect.get(index + 1));
+                            if (ExceptSyntax.PUBLIC.getList().contains(collect.get(check))) {
+                                accessClass = new AccessClass(collect.get(check), abstractCheck, collect.get(index + 1));
+                            }
+                            result.getClasses().add(accessClass);
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("error occur wrong file or wrong class inside - detail : " + e);
+                    continue;
+                }
                 continue;
             }
             
             if (o.contains(CodeSyntax.INTERFACE.get())) {
                 int index = collect.indexOf(CodeSyntax.INTERFACE.get());
-                result.getInterfaceName().add(collect.get(index - 1));
+
+                try {
+                    if (collect.get(index).equals(CodeSyntax.INTERFACE.get())) {
+                        if (!tempInterface.contains(collect.get(index + 1))) {
+                            tempInterface.add(collect.get(index + 1));
+                            int check = accessCheck(collect, index);
+
+                            AccessInterface accessInterface = new AccessInterface("package private", collect.get(index + 1));
+                            if (ExceptSyntax.PUBLIC.getList().contains(collect.get(check))) {
+                                accessInterface = new AccessInterface(collect.get(check), collect.get(index + 1));
+                            }
+                            result.getInterfaces().add(accessInterface);
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("error occur wrong file or wrong interface inside - detail : " + e);
+                    continue;
+                }
                 continue;
             }
 
             if (o.contains(CodeSyntax.ENUM.get())) {
-                int index = collect.indexOf(CodeSyntax.INTERFACE.get());
-                result.getInterfaceName().add(collect.get(index - 1));
+                int index = collect.indexOf(CodeSyntax.ENUM.get());
+
+                try {
+                    if (collect.get(index).equals(CodeSyntax.INTERFACE.get())) {
+                        if (!tempEnum.contains(collect.get(index + 1))) {
+                            tempEnum.add(collect.get(index + 1));
+                            int check = accessCheck(collect, index);
+
+                            AccessEnum accessEnum = new AccessEnum("package private", collect.get(index + 1));
+                            if (ExceptSyntax.PUBLIC.getList().contains(collect.get(check))) {
+                                accessEnum = new AccessEnum(collect.get(check), collect.get(index + 1));
+                            }
+                            result.getEnums().add(accessEnum);
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("error occur wrong file or wrong enum inside - detail : " + e);
+                    continue;
+                }
                 continue;
             }
 
@@ -104,11 +169,11 @@ public class JFileAnalyzer {
                 if (bracketFirst >= 1) {
                     check = collect.get(bracketFirst - 1);
                     if (!isBreak) {
-                        if (!methodCheck.contains(".") & !(check.contains("=") || check.contains("new"))) {
-                            int methodEnd = methodCheck.indexOf(CodeSyntax.METHOD.get());
-                            String method = methodCheck.substring(0, methodEnd);
-
-                            if (!tempMethod.contains(method) & !result.getClassName().contains(method)) {
+                        int methodEnd = methodCheck.indexOf(CodeSyntax.METHOD.get());
+                        String method = methodCheck.substring(0, methodEnd);
+                        if (!(method.matches("(.*)\\.(.*)") || method.matches("(.*)\\[(.*)")) & !(check.matches("[=+\\-!?&|^`,:.~*%/\\\\]+") ||
+                                check.contains("new") || check.contains("return")) || (check.contains("<") & check.contains(">"))) {
+                            if (!tempMethod.contains(method) & !tempClass.contains(method)) {
                                 tempMethod.add(method);
                                 MemberMethod memberMethod = new MemberMethod("package private", check, method);
 
@@ -121,7 +186,7 @@ public class JFileAnalyzer {
                                     }
                                 }
 
-                                result.getMethod().add(memberMethod);
+                                result.getMethods().add(memberMethod);
                             }
                         }
                     }
