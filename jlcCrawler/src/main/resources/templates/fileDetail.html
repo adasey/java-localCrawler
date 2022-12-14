@@ -56,18 +56,31 @@
         </tbody>
     </table>
 
+    method
     <table>
         <thead>
         <tr>
+            <th>
+                access
+            </th>
+            <th>
+                return
+            </th>
             <th>
                 method
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="val : ${javaSyntax.methodName}">
+        <tr th:each="val : ${javaSyntax.method}">
             <td>
-                [[ ${val} ]]
+                [[ ${val.accessModifier} ]]
+            </td>
+            <td>
+                [[ ${val.returnType} ]]
+            </td>
+            <td>
+                [[ ${val.methodName} ]]
             </td>
         </tr>
         </tbody>
