@@ -39,3 +39,4 @@ out/
 
 ### Code Files ###
 /src/main/bunch/**
+/src/main/resources/csvPackage/**
